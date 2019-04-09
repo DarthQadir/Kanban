@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <h2 style="text-align:center;color:#52B788">
+    Kanban Board
+   </h2>
+   
+<style>
+  body {
+  background-image: url(" http://www.haccpsafetyplan.com/wp-content/uploads/2018/08/web-page-background-color-2.jpg")
+  }
+  
+</style>
+   
+</head>
+<body>
+  
+ 
+<table style="height: 257px; border-color: #ffffff; margin-left: auto; margin-right: auto;border-style: dotted solid" border="1" width="524">
+<tbody>
+<tr style="height: 26.4px;">
+<td style="width: 168px; height: 26.4px; text-align: center;color:#66ff99"><strong><em>To do</em></strong></td>
+<td style="width: 168px; height: 26.4px; text-align: center;color:#66ff99"><em><strong>Doing</strong></em></td>
+<td style="width: 168px; height: 26.4px; text-align: center;color:#66ff99"><strong><em>Done</em></strong></td>
+</tr>
+<tr style="height: 106px;">
+<td style="width: 168px; height: 106px; border-style:hidden; color:#66ff99">
+{% for task in tasks %}
+      <p style = 'text-align:center;' >{{task.task}}</p>
+    {% endfor %}
+</td>
+<td style="width: 168px; height: 106px; border:1px solid;border-color: #ffffff; color:#66ff99">
+{% for task in tasks_doing %}
+      <p style = 'text-align:center;' >{{task.task}}</p>
+    {% endfor %}
+</td>
+
+<td style="width: 168px; height: 106px;border-style:hidden;color:#66ff99">
+{% for task in tasks_done %}
+      <p style = 'text-align:center;' >{{task.task}}</p>
+    {% endfor %}
+</td>
+</tr>
+</tbody>
+</table>
+
+  
+
+
+<div style="float:left">
+  <p style="margin:51px 5px 0px 435px; text-align:center; color:#66ff99; font-weight:bold;">
+    Add New Task
+  </p>
+  <br>
+  <form style='margin: 0px 15px 0px 500px' action="{{ url_for('add') }}" method="post">
+   <input type='text' name='new_task' style='border: 2px solid white; border-radius: 10px;height:17px;'>
+   <input type='hidden' name='category' value='To do'>
+	<input type='submit' value='Add' style='position:relative; right:105px; top:35px;border-radius: 10px; border-color:white;'>
+  </form>
+</div>
+
+<div style="float:left">
+    <p style="margin:50px 550px 0px 145px; text-align:center; color:#66ff99; font-weight:bold; position:relative; right:140px">
+    Move Task
+  </p>
+  <br>
+  <form style='margin: 10px 310px 0px 0px;position:relative; right:110px' action="{{ url_for('move') }}" method="post">
+    <select name='move_task' type='radio' style='border: 2px solid white; border-radius: 10px;position:relative; left:70px; bottom:9px;width:162px; height:23px;' required>
+      {% for tasks in all_data %}
+      <option>{{tasks.task}}</option>
+    {% endfor %}
+    </select>
+	<select name='move_column' type='radio' style='border: 2px solid white; border-radius: 10px;position:relative; top:40px; right:97px;width:163px;height:23px;'>
+      <option>To do</option>
+	  <option>Doing</option>
+	  <option>Done</option>
+    </select><br>
+	<input type='submit' value='Move' style='margin:60px 30px 5px 115px;border-radius: 10px; border-color:white; position:relative; left:10px;'>
+  </form>
+</div>
+
+<div style="float:right">
+    <p style="margin:-157px 550px 0px 20px; text-align:center; color:#66ff99; font-weight:bold;">
+    Delete Task
+  </p>
+  
+  <br>
+  <form style='margin:10px 5px 5px 5px' action="{{ url_for('delete') }}" method="post">
+    <select name='delete_task' type='text' style='border: 2px solid white; border-radius: 10px; position:relative;right:15px; bottom:68px;width:162px;height:23px;' required>
+    {% for tasks in all_data %}
+      <option>{{tasks.task}}</option>
+    {% endfor %}
+    </select>
+	<input type='submit' value='Delete' style='margin:60px 150px 5px 55px;border-radius: 10px; border-color:white; position:relative; right:190px; bottom:30px' >
+  </form>
+</div>
+
+
+</body>
+</html>
+
